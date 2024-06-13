@@ -1,0 +1,102 @@
+.nav_btns_container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    justify-content: space-between;
+    margin-left: 40px;
+    transition: all .5s ease;
+}
+
+.nav_btns_container ul {
+    display: flex;
+    list-style: none;
+}
+
+.nav_btns_container ul a {
+    text-decoration: none;
+    margin: 0 15px;
+    cursor: pointer;
+    color: var(--secondary-color);
+    transition: all .5s ease;
+}
+
+.nav_btns_container ul a.active {
+    font-weight: 700;
+}
+
+.login_btn_container button {
+    background: none;
+    border: none;
+    outline: none;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.closeBtn,
+.menu_btn {
+    display: none;
+}
+
+/* ========================================= responsive_nav_btns_container */
+.responsive_nav_btns_container {
+    display: none;
+    max-width: 400px;
+    width: 100%;
+    position: absolute;
+    right: 0%;
+    top: 0px;
+    padding: 50px 20px;
+    border-radius: 5px;
+    text-align: center;
+    transform: rotate3d(5, 4, 1, 40deg); 
+    opacity: 0;
+    transition: all .5s ease;
+    background: var(--secondary-color);
+    pointer-events: none;
+    z-index: -100;
+}
+
+.responsive_profile_container{
+    padding: 20px;
+    color: var(--primary-color);
+}
+
+.resp_nav_btns {
+    list-style: none;
+}
+
+.resp_nav_btns li{
+    margin: 10px 0px;
+}
+
+.resp_nav_btns a {
+    color: var(--primary-color);
+}
+
+.resp_login_btns_container {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.resp_login_btns_container button {
+    padding: 7px 10px;
+    font-weight: bolder;
+    font-family: cursive;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: black;
+}
+
+.dp_container{
+    width: 50px;
+    height: 50px;
+    background-color: red;
+    border-radius: 30px;
+    overflow: hidden;
+    margin: auto;
+}
