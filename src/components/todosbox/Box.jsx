@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { deleteTodo, asClickEventHandler } from '../../features/todo/todoSlice';
 import axios from 'axios';
@@ -11,6 +11,7 @@ const Box = ({ index, todo }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
     const [deleteBtnLoader, setDeleteBtnLoader] = useState(undefined);
+    const textAreaRef = useRef(null);
 
     const deleteHandler = async (todoId) => {
         // enable loading icon for delete button
@@ -75,20 +76,24 @@ const Box = ({ index, todo }) => {
         }
     };
 
+    useEffect(() => {
+        // console.log("ref", textAreaRef.current)
+        textAreaRef.current.innerHTML = todo.textarea?.length > 560 ? todo.textarea?.slice(0, 560) + "..." : todo.textarea + "...";
+    })
+
     return (
         <div className="list-container">
 
             <h3 className="l-h3"> {index + 1})
                 <span className="num">{todo.title.length > 28 ? todo.title.slice(0, 28) + '...' : todo.title}</span>
-                {/* <span className="num">Lorem ipsum dolor sit amet consectetur adipisicing elit?</span> */}
             </h3>
-            {/* <p className="l-p">${elem.description.length > 570 ? elem.description.slice(0, 470) + "..." : elem.description} */}
             <p className="l-p">
-                {todo.textarea?.length > 560 ? todo.textarea?.slice(0, 560) + "..." : todo.textarea}
+                {/* {todo.textarea?.length > 560 ? todo.textarea?.slice(0, 560) + "..." : todo.textarea + "..."} */}
+                <span ref={textAreaRef}></span>
                 <span
                     className="read_more_btn"
                     onClick={() => dispatch(asClickEventHandler({ action: 'todoReadHandler', _id: todo._id }))}>
-                    {todo.textarea.length > 560 ? "Read more" : ""}
+                    Read 📖
                 </span>
             </p>
             <div className="time-container">

@@ -122,6 +122,7 @@ const LogInContainer = () => {
                 console.log('Error:', errorMessage[1]);
             }
             console.log("Error: ", error);
+            alert(error.message);
         } finally {
             // set loading false to signup
             setLoaderHandler(prev => ({ ...prev, Signup: false }))
@@ -166,6 +167,7 @@ const LogInContainer = () => {
                 console.log('Error:', errorMessage[1]);
             }
             console.log("Error: ", error);
+            alert(error.message)
         } finally {
             // set loading false to login
             setLoaderHandler(prev => ({ ...prev, Login: false }))

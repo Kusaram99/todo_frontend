@@ -1,13 +1,30 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { addTodo } from '../../features/todo/todoSlice'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../loader/Loader';
 
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
+
+// Define toolbar options
+const modules = {
+    toolbar: [
+        [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+        [{ 'color': [] }, { 'background': [] }],
+    ],
+};
+
+
 const FormMain = () => {
 
     const [formData, SetFormData] = useState({ title: "", textarea: "" });
+
+    const quillRef = useRef(null);
 
     // loader handler as submit button
     const [loaderHandler, setLoaderHandler] = useState(undefined);
@@ -21,10 +38,22 @@ const FormMain = () => {
         SetFormData(prev => ({ ...prev, [name]: value }));
     }
 
+    // quill onchange handler
+    const quillHandler = (value) => {
+        SetFormData(prev => ({ ...prev, textarea: value }))
+        // console.log("quill values: ", value)
+    }
+
+
+    // form submite handler
     const onsubmitHandler = async (e) => {
         e.preventDefault();
 
-        console.log("form data.....", formData)
+        // console.log("form data.....", formData)
+        // console.log("quill", quillRef.current);
+
+        // return;
+
         const { _id, accessToken } = JSON.parse(localStorage.getItem('refreshToken')) || {};
         if (!_id || !accessToken) {
             alert("Please log In once!");
@@ -116,6 +145,7 @@ const FormMain = () => {
     return (
         <div className="form-container">
             <form className="todo-form" onSubmit={onsubmitHandler}>
+
                 <div className="input_box">
                     <label htmlFor="todo">Title</label>
                     <input
@@ -128,26 +158,32 @@ const FormMain = () => {
                         value={formData.title}
                         onChange={onchangeHandler} />
                 </div>
-                <div className="input_box">
-                    <label htmlFor='textarea'>Notes</label>
-                    <textarea
-                        className="todo-input textarea"
-                        name="textarea"
-                        id="textarea"
-                        required
-                        placeholder="Write here..."
+
+
+                <div style={{ marginTop: "10px" }}>
+                    <label>Textarea</label>
+
+                    <ReactQuill
                         value={formData.textarea}
-                        onChange={onchangeHandler}>
-                    </textarea>
+                        ref={quillRef}
+                        modules={modules}
+                        style={{
+                            maxHeight: "200px",
+                            height: 'auto'
+                        }}
+                        onChange={quillHandler} />
                 </div>
+
                 <div style={{
                     display: "flex",
-                    flexDirection: "column", 
-                    alignItems: "flex-start"
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    marginTop: "35px"
                 }}>
-                   {loaderHandler && <Loader />}
+                    {loaderHandler && <Loader />}
                     <button id="submit_btn">Submit</button>
                 </div>
+
             </form >
         </div >
     )

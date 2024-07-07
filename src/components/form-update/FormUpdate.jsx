@@ -1,8 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { asClickEventHandler, updateTodo } from '../../features/todo/todoSlice'
 import axios from 'axios'
 import Loader from '../loader/Loader';
+
+
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
+
+// Define toolbar options
+const modules = {
+    toolbar: [
+        [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+        [{ 'color': [] }, { 'background': [] }],
+    ],
+};
 
 
 const FormUpdate = () => {
@@ -10,7 +25,9 @@ const FormUpdate = () => {
     const state = useSelector(state => state.todo?.todoDatatoUpdate.formDataUpdateHandler);
 
     // state variable for form data handler
-    const [formData, SetFormData] = React.useState({ title: "", textarea: "" });
+    const [formData, SetFormData] = useState({ title: "", textarea: "" });
+
+    const quillRef = useRef(null);
 
     // create dispatch function
     const dispatch = useDispatch();
@@ -24,13 +41,20 @@ const FormUpdate = () => {
         SetFormData(prev => ({ ...prev, [name]: value }));
     }
 
+    // quill onchange handler
+    const quillHandler = (value) => {
+        SetFormData(prev => ({ ...prev, textarea: value }))
+        // console.log("quill values: ", value)
+    }
+
+    // update handler
     const updateHandler = async (e) => {
         e.preventDefault();
 
         // get value of buttons as user click
         const action = e.nativeEvent.submitter.value;
 
-        // send accessToken with header for update todo
+        // accessToken with header for update todo
         const { accessToken } = JSON.parse(localStorage.getItem('refreshToken'));
         const headers = {
             'Authorization': `Bearer ${accessToken}`
@@ -137,23 +161,27 @@ const FormUpdate = () => {
                             value={formData?.title}
                             onChange={onchangeHandler} />
                     </div>
-                    <div className="input_box">
-                        <label htmlFor='addnote'>Notes</label>
-                        <textarea
-                            className="todo-input textarea textarea_update"
-                            id='addnote'
-                            value={formData?.textarea}
-                            name="textarea"
-                            onChange={onchangeHandler}
-                        >
-                        </textarea>
+
+                    <div style={{ marginTop: "10px" }}>
+                        <label>Textarea</label>
+
+                        <ReactQuill
+                            value={formData.textarea}
+                            ref={quillRef}
+                            modules={modules}
+                            style={{
+                                maxHeight: "200px",
+                                height: 'auto'
+                            }}
+                            onChange={quillHandler} />
                     </div>
+
                     <div className="update_btn_container box_btn_container ">
                         <button
                             type='submit'
                             value="update"
-                            className="update_btn deleteBtn" > 
-                            {loaderHandler?
+                            className="update_btn deleteBtn" >
+                            {loaderHandler ?
                                 <Loader width='30' height='30' />
                                 :
                                 "Update"

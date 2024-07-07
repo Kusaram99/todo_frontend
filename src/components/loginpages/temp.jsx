@@ -17,11 +17,7 @@ const Temp = () => {
                         <div className="group">
                             <label htmlFor="pass" className="label">Password</label>
                             <input id="pass" type="password" className="input" data-type="password" />
-                        </div>
-                        {/* <div className="group">
-                            <input id="check" type="checkbox" className="check" checked />
-                            <label htmlFor="check"><span className="icon"></span> Keep me Signed in</label>
-                        </div> */}
+                        </div> 
                         <div className="group">
                             <input type="submit" className="button" value="Sign In" />
                         </div>

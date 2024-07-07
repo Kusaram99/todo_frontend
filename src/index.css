@@ -4,7 +4,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font: 600 16px/18px "Open Sans", sans-serif;
+  /* font: 600 16px/18px "Open Sans", sans-serif; */
+  font-family: "Open Sans", sans-serif;
 }
 
 :root {
@@ -17,6 +18,14 @@
 body {
   background-color: #efefef;
 }
+
+/* --------------- */
+.ql-editor{
+  height: 200px !important;
+}
+
+
+/* ----------- */
 
 header {
   width: 100%;
@@ -109,6 +118,7 @@ label {
 
 .input_box {
   display: grid;
+  color: #000000;
 }
 
 .todo-input {
@@ -117,7 +127,6 @@ label {
   outline: none;
   border-radius: 5px;
   margin: 5px 0px;
-  color: var(--secondary-color);
   background: transparent;
   box-shadow: var(--box-shadow);
   transition: all 0.5s ease-in;
@@ -132,12 +141,12 @@ label {
 }
 
 input::placeholder {
-  color: var(--secondary-color);
+  /* color: var(--secondary-color); */
   font-weight: 500;
 }
 
 textarea::placeholder {
-  color: var(--secondary-color);
+  /* color: var(--secondary-color); */
   font-weight: 500;
 }
 
@@ -274,7 +283,7 @@ textarea::placeholder {
 }
 
 .update_btn_container {
-  margin-top: 10px;
+  margin-top: 55px;
 }
 
 .update_btn {
@@ -343,6 +352,8 @@ textarea::placeholder {
   width: 100%;
   height: 100%;
   overflow: auto;
+  color: #000000;
+  font-weight: 100;
 }
 
 .article_title {
