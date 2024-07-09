@@ -167,10 +167,10 @@ const FormMain = () => {
                         value={formData.textarea}
                         ref={quillRef}
                         modules={modules}
-                        style={{
-                            maxHeight: "200px",
-                            height: 'auto'
-                        }}
+                        // style={{
+                        //     maxHeight: "200px",
+                        //     height: 'auto'
+                        // }}
                         onChange={quillHandler} />
                 </div>
 

@@ -31,10 +31,15 @@ const Header = () => {
 
         try {
 
-            const response = await axios.post(`${import.meta.env.VITE_API_LOGOUT_URL}/logout`, {}, { headers });
+            const response = await axios.post(`${import.meta.env.VITE_API_LOGIN_AND_SIGNUP_URL}/logout`, {}, { headers });
             if (response.status === 200) {
                 alert("Log Out Successfull!");
                 // console.log("first--- reponse: ", response)
+                // logoute user
+                localStorage.removeItem('refreshToken');
+                navigate('/login');
+                SetIsSmallDevice(false)
+                dispatch(userLogOut(""));
             }
 
         } catch (error) {

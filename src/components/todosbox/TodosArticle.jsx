@@ -153,6 +153,7 @@ const TodosArticle = () => {
                 <h1 className="article_title">{articleShow.title}</h1>
 
                 <ReactQuill
+                // style={{height: '100dvh'}}
                     ref={quillRef}
                     theme="bubble"
                     value={articleShow.textarea}

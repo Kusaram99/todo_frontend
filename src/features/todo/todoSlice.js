@@ -5,6 +5,7 @@ import axios from 'axios'
 export const fetchTodos = createAsyncThunk('action/fetchTodos', async () => {
 
     const local = localStorage.getItem('refreshToken');
+    // console.log("local: ", local)
     if (!local) {
         return []
     } else {
@@ -17,9 +18,11 @@ export const fetchTodos = createAsyncThunk('action/fetchTodos', async () => {
             };
 
             // send request
-            const response = await axios.get(`${import.meta.env.VITE_API_TODO_URL}/get-user-data/${_id}`, { headers })
+            const response = await axios.get(`${import.meta.env.VITE_API_TODO_URL}/get-user-data/${_id}`, { headers });
+            console.log("response: ", response)
             return response?.data?.data?.result
         } catch (error) {
+            console.log("errr:- ", error)
             if (error.response?.status === 401) {
                 return await handleTokenExpiration();
             } else {
@@ -34,23 +37,30 @@ export const fetchTodos = createAsyncThunk('action/fetchTodos', async () => {
 
 // expired token handler
 const handleTokenExpiration = async () => {
-
+    // console.log("handle token expiration: ")
     try {
         const { refreshToken } = JSON.parse(localStorage.getItem('refreshToken'));
         const response = await axios.post(`${import.meta.env.VITE_API_LOGIN_AND_SIGNUP_URL}/token`, {
             refreshToken: `Bearer ${refreshToken}`
         });
 
+        console.log("handle token response: ", response)
+
         if (response?.status === 200) {
             return await refreshTokenHandler(response);
         }
     } catch (error) {
-        console.error("Refresh token is expired: ", error);
+        console.log("Refresh token is expired: ", error);
+        alert("Refresh token is expired, Please login again");
+        
     }
 };
 
 // handle refresh token and then sen get request to the server
 const refreshTokenHandler = async (response) => {
+
+    // console.log("refresh token handler: ", response);
+
     if (response?.status === 200) {
         try {
             // store new generated token to the localstorage

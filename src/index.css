@@ -19,11 +19,43 @@ body {
   background-color: #efefef;
 }
 
-/* --------------- */
-.ql-editor{
-  height: 200px !important;
+body::-webkit-scrollbar{
+  display: none;
 }
 
+/* --------------- */
+.quill {
+  margin: 5px 0px !important;
+}
+
+.ql-container {
+  height: 350px !important;
+}
+
+.ql-editor {
+  overflow: -webkit-scrollbar;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+.ql-editor::-webkit-scrollbar { 
+  width: 12px;
+  background-color: rgb(255, 255, 255);
+}
+
+.ql-editor::-webkit-scrollbar-thumb  {
+  background-color: var(--secondary-color);
+}
+
+.ql-container::-webkit-scrollbar-track {
+  /* background: #832626; */
+  /* Color of the track */
+  width: 100px;
+  height: 50px;
+  color: #11aa18;
+  border-radius: 10px;
+  /* Optional: round the corners */
+}
 
 /* ----------- */
 
@@ -282,6 +314,10 @@ textarea::placeholder {
   transition: all 0.2s ease;
 }
 
+.todo_update_container .ql-container{
+  height: 100px !important;
+}
+
 .update_btn_container {
   margin-top: 55px;
 }
@@ -338,9 +374,12 @@ textarea::placeholder {
 }
 
 .article_inner_container {
-  width: 80%;
-  height: 80%;
+  /* width: 80%;
+  height: 80%; */
+  width: inherit;
+  height: 100vh;
   position: absolute;
+
   line-height: 30px;
   padding: 50px;
   border-radius: 10px;
@@ -477,7 +516,7 @@ textarea::placeholder {
   .nav_btns_container {
     display: none;
   }
-  
+
   .menu_btn {
     display: block;
   }
